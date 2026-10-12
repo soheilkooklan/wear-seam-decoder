@@ -43,7 +43,8 @@ model), hliq (seam features).
 7. Numbers of the report. `python3 ../analysis/paper_numbers.py` (most tables),
    `seam_eval.py` and `seam_spread.py` (Table 3), `nested_check.py`,
    `seed_eval.py`, `protocol_checks.py` and `protocol_checks2.py` (Section 4.7
-   and Table 7), `v24_check.py` (simulation score of submission v24).
+   and Table 7), `v24_check.py` (simulation score of submission v24),
+   `review6_exps.py` (bounds per class or per participant, seed average; Section 4.6).
 
 The analysis scripts read the files written by the earlier steps. If one is
 missing, they stop with an error that names the file and the project folder.

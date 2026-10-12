@@ -33,6 +33,11 @@ def test_symmetrisation():
     W = csr_matrix(np.array([[0.0, 1.0], [3.0, 0.0]]))
     assert np.allclose(symmetrise(W).toarray(), [[0, 4], [4, 0]])
     assert np.allclose(symmetrise(W, "max").toarray(), [[0, 3], [3, 0]])
+    try:
+        symmetrise(W, "mean")
+    except ValueError:
+        return
+    raise AssertionError("an unknown symmetrisation was accepted")
 
 
 def test_bounds_are_checked():
@@ -56,6 +61,18 @@ def test_bias_is_bounded_and_null_has_none():
     lp[:, 0] = 0.0
     pred = decode(lp, identity(50, format="csr"), beta=0.0, lo=20, hi=1000)
     assert (pred == 0).all()
+
+
+def test_bias_steps_stop_before_the_last_iteration():
+    # 0.15 per step: 24 steps (3.6) do not overcome a margin of 3.65, 25 steps would
+    lp = np.full((10, 3), -10.0)
+    lp[:, 1] = 0.0
+    lp[:, 2] = -3.65
+    pred = decode(lp, identity(10, format="csr"), beta=0.0, lo=10, hi=1000)
+    assert (pred == 1).all()
+    lp[:, 2] = -3.55
+    pred = decode(lp, identity(10, format="csr"), beta=0.0, lo=10, hi=1000)
+    assert (pred == 2).all()
 
 
 def test_max_bias_clips_the_bias():

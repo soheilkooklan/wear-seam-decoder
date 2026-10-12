@@ -50,7 +50,11 @@ def link_weights(n: int, pairs: np.ndarray, scores: np.ndarray) -> csr_matrix:
 
 
 def symmetrise(W: spmatrix, how: str = "sum") -> spmatrix:
-    return W + W.T if how == "sum" else W.maximum(W.T)
+    if how == "sum":
+        return W + W.T
+    if how == "max":
+        return W.maximum(W.T)
+    raise ValueError("how must be 'sum' or 'max'")
 
 
 def build_graph(video: np.ndarray, imu: np.ndarray, limb: np.ndarray, pairs: np.ndarray | None = None,
@@ -76,9 +80,11 @@ def decode(logp: np.ndarray, A: spmatrix, beta: float = 1.5, lo: float | np.ndar
            null: int = 0, max_bias: float | None = None) -> np.ndarray:
     """logp: (n, C) unary log probabilities; A: symmetric (n, n) graph from build_graph.
     lo, hi: scalars or (C,) arrays of count bounds, lo <= hi. The class with index
-    null has no bias. Bias steps of size step are taken from iteration start
-    (0-based) on, so a bias cannot exceed step * (iters - start) in absolute value;
-    max_bias clips it further if given. Returns labels (n,)."""
+    null has no bias. Bias steps of size step are taken after iterations start to
+    iters - 2 (0-based); a step after the last iteration would not change the
+    labels and is not taken. The bias that enters the labels is therefore at most
+    step * (iters - start - 1) in absolute value (3.6 with the defaults); max_bias
+    clips it further if given. Returns labels (n,)."""
     logp = np.asarray(logp, dtype=np.float64)
     if logp.ndim != 2:
         raise ValueError("logp must be a 2-D array (windows x classes)")
@@ -98,7 +104,7 @@ def decode(logp: np.ndarray, A: spmatrix, beta: float = 1.5, lo: float | np.ndar
         z = logp + b + beta * np.log(msg + 1e-3)
         q = np.exp(z - z.max(1, keepdims=True))
         q /= q.sum(1, keepdims=True)
-        if it >= start:
+        if start <= it < iters - 1:
             cnt = np.bincount(q.argmax(1), minlength=C)
             up = cnt < lo
             down = cnt > hi

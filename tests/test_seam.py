@@ -63,6 +63,14 @@ def test_short_windows_are_rejected():
     raise AssertionError("windows with fewer than three samples were accepted")
 
 
+def test_windows_need_three_axes():
+    try:
+        seam_points(np.zeros((3, 50, 4)))
+    except ValueError:
+        return
+    raise AssertionError("windows with four axes were accepted")
+
+
 if __name__ == "__main__":
     for name, f in sorted(globals().items()):
         if name.startswith("test_"):

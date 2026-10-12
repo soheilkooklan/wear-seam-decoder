@@ -19,15 +19,19 @@ with NumPy 2.4 and SciPy 1.17).
 ```
 python seam.py                 # synthetic check of the seam distance
 python reproduce_example.py    # decoder on two example participants
-python tests/test_seam.py      # tests (they also run under pytest)
+python tests/test_seam.py      # tests
 python tests/test_decode.py
+python -m pytest -q            # the same tests, if pytest is installed
 ```
 
 `examples/` holds, for two training participants (4 and 21), the final unary
 log probabilities, the participant graph and the labels of the final system in
-simulation. `reproduce_example.py` decodes them and reports how many labels
-differ from the final system (none). The files hold model outputs and a graph,
-no competition data.
+simulation (3,191 and 2,556 windows). `reproduce_example.py` decodes them and
+reports how many labels differ from the final system (none). This checks the
+decoder on these two participants only; it is not a reproduction of the whole
+pipeline. The files hold model outputs and a graph, no competition data.
+`pytest.ini` limits pytest to `tests/`, since `research/` holds scripts with
+function names that pytest would otherwise collect.
 
 With the challenge data, `seam_distance` and `decode` are applied to one
 participant at a time. `seam_distance` builds a dense n x n matrix, which is
@@ -37,9 +41,10 @@ once. Pass the limb ids so that cross-limb pairs are excluded.
 Default arguments of `build_graph` and `decode` are the values of the final
 submission: k = 10, IMU weight 1, link weight 10, sum symmetrisation,
 beta = 1.5, l = 75, h = 95, 30 iterations, step 0.15, bias updates from the
-sixth iteration. `lo` and `hi` also accept one bound per class. A bias cannot
-exceed step x (iterations - 5) = 3.75 in absolute value; `max_bias` clips it
-further if given (not used in the report).
+sixth iteration. `lo` and `hi` also accept one bound per class. No bias step is
+taken after the last iteration, since it would not change the labels, so the
+bias that enters the labels is at most step x (iterations - 6) = 3.6 in absolute
+value; `max_bias` clips it further if given (not used in the report).
 
 ## 2. Research scripts
 
@@ -80,7 +85,7 @@ folder.
 | Stacking chains A, B, C | `src/stage2.py`, `src/stack_pipeline.py`, `src/hgb_stage.py`, `src/chain_h.sh`, `src/chain_hm.sh`, `src/chain_v15f.sh` |
 | Label and seam variants, seed replicates | `src/chain_v15.sh`, `src/chain_v15x.sh`, `src/chain_v15q.sh`, `src/chain_v15f_seeds.sh`, `src/stack_pipeline_x.py`, `src/hgb_stage_x.py` |
 | Test predictions | `src/make_mf_sub.py` |
-| Numbers of the report | `analysis/paper_numbers.py`, `analysis/seam_eval.py`, `analysis/seam_spread.py`, `analysis/nested_check.py`, `analysis/seed_eval.py`, `analysis/protocol_checks.py`, `analysis/protocol_checks2.py`, `analysis/v24_check.py` |
+| Numbers of the report | `analysis/paper_numbers.py`, `analysis/seam_eval.py`, `analysis/seam_spread.py`, `analysis/nested_check.py`, `analysis/seed_eval.py`, `analysis/protocol_checks.py`, `analysis/protocol_checks2.py`, `analysis/v24_check.py`, `analysis/review6_exps.py` |
 
 The Kaggle scripts need PyTorch and a GPU; the others need NumPy, SciPy, pandas
 and scikit-learn. The analysis scripts are run from `research/src`.

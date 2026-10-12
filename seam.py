@@ -16,7 +16,7 @@ import numpy as np
 def seam_points(w: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     """w: (n, L, 3) windows, L >= 3. Returns the extrapolated end and start points, (n, 3) each."""
     w = np.asarray(w, dtype=np.float64)
-    if w.ndim != 3 or w.shape[1] < 3:
+    if w.ndim != 3 or w.shape[1] < 3 or w.shape[2] != 3:
         raise ValueError("w must have shape (n, L, 3) with L >= 3")
     va = w[:, -1] - w[:, -2]
     aa = w[:, -1] - 2 * w[:, -2] + w[:, -3]
