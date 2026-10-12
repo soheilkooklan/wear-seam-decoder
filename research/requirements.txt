@@ -1,0 +1,7 @@
+# versions used for the CPU parts
+numpy==2.4.4
+scipy==1.17.1
+pandas==3.0.2
+scikit-learn==1.8.0
+# Kaggle GPU scripts (Tesla T4, CUDA 12.8)
+torch==2.10.0
