@@ -90,6 +90,25 @@ folder.
 The Kaggle scripts need PyTorch and a GPU; the others need NumPy, SciPy, pandas
 and scikit-learn. The analysis scripts are run from `research/src`.
 
+## 3. Kaggle notebooks
+
+The scripts in `research/kaggle/` are also public as Kaggle notebooks, with the
+competition data as input:
+
+- [WEAR 2026 data pack](https://www.kaggle.com/code/soheilkooklan/wear-2026-data-pack): `kaggle/export_pack.py`
+- [WEAR 2026 video transformer and IMU CNN](https://www.kaggle.com/code/soheilkooklan/wear-2026-video-transformer-and-imu-cnn): `kaggle/deep_models.py`
+- [WEAR 2026 joint network 1](https://www.kaggle.com/code/soheilkooklan/wear-2026-joint-network-1): `kaggle/joint_model.py`
+- [WEAR 2026 joint network 2](https://www.kaggle.com/code/soheilkooklan/wear-2026-joint-network-2): `kaggle/joint2_model.py`
+- [WEAR 2026 contrastive successor embeddings](https://www.kaggle.com/code/soheilkooklan/wear-2026-contrastive-successor-embeddings): `kaggle/contrast_full.py`
+- [WEAR 2026 video bi-encoder](https://www.kaggle.com/code/soheilkooklan/wear-2026-video-bi-encoder): `kaggle/link2_model.py` to `link4_model.py`
+- [WEAR 2026 IMU bi-encoder](https://www.kaggle.com/code/soheilkooklan/wear-2026-imu-bi-encoder): `kaggle/imu_link_model.py`
+- [WEAR 2026 sequence model](https://www.kaggle.com/code/soheilkooklan/wear-2026-sequence-model): `kaggle/chain_model.py`
+
+[WEAR 2026 final decoding](https://www.kaggle.com/code/soheilkooklan/wear-2026-final-decoding) rebuilds the selected
+submission (public 0.92542, private 0.92308) from the saved test outputs in the
+dataset [WEAR 2026 final scores](https://www.kaggle.com/datasets/soheilkooklan/wear-2026-final-scores)
+and the competition data, with the decoder of `decode.py`.
+
 ## Citation
 
 ```
