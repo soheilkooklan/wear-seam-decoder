@@ -2,7 +2,7 @@
 
 Code for the report "An Error Budget for Shuffled Multimodal Windows in the 3rd
 WEAR Challenge: Stacking, Count Constraints and Seam Matching"
-(Soheil Kooklan, 2026).
+(Soheil Kooklan, 2026), [arXiv:2610.32398](https://arxiv.org/abs/2610.32398).
 
 The repository has two parts.
 
@@ -51,7 +51,7 @@ value; `max_bias` clips it further if given (not used in the report).
 `research/` holds the scripts that produced the results of the report, as they
 were used. They document every trained part, but they are not a one-command
 reproduction: paths are relative to a project folder (`WEAR_ROOT`, with
-`pack/`, `work/` and `ref/` inside it), the competition data are needed, and a
+`downloads/`, `pack/`, `work/` and `ref/` inside it), the competition data are needed, and a
 few small steps were run as short interactive commands and are not included
 (averaging the two joint networks, writing the fused stage-1 probabilities with
 the weights of Appendix A, and writing the tile tables with relabelled or
@@ -89,5 +89,21 @@ folder.
 
 The Kaggle scripts need PyTorch and a GPU; the others need NumPy, SciPy, pandas
 and scikit-learn. The analysis scripts are run from `research/src`.
+
+## Citation
+
+```
+@misc{kooklan2026errorbudget,
+  author        = {Kooklan, Soheil},
+  title         = {An Error Budget for Shuffled Multimodal Windows in the 3rd {WEAR} Challenge:
+                   Stacking, Count Constraints and Seam Matching},
+  year          = {2026},
+  eprint        = {2610.32398},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CV},
+  doi           = {10.48550/arXiv.2610.32398},
+  url           = {https://arxiv.org/abs/2610.32398}
+}
+```
 
 License: MIT

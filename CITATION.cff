@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the report."
+title: "wear-seam-decoder"
+authors:
+  - family-names: Kooklan
+    given-names: Soheil
+    orcid: "https://orcid.org/0009-0003-5035-7833"
+repository-code: "https://github.com/soheilkooklan/wear-seam-decoder"
+license: MIT
+preferred-citation:
+  type: article
+  title: "An Error Budget for Shuffled Multimodal Windows in the 3rd WEAR Challenge: Stacking, Count Constraints and Seam Matching"
+  authors:
+    - family-names: Kooklan
+      given-names: Soheil
+      orcid: "https://orcid.org/0009-0003-5035-7833"
+  year: 2026
+  journal: "arXiv preprint arXiv:2610.32398"
+  doi: "10.48550/arXiv.2610.32398"
+  url: "https://arxiv.org/abs/2610.32398"
